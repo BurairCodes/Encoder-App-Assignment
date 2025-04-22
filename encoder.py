@@ -1,7 +1,7 @@
 import streamlit as st
 import random as rd
 
-from test import substitution_encoding, substitution_decoding
+from susbstitution import substitution_encoding, substitution_decoding
 
 
 
