@@ -1,4 +1,10 @@
 import streamlit as st
+import random as rd
+
+from test import substitution_encoding, substitution_decoding
+
+
+
 
 key = {
  'a': 'hY3kL', 'b': 'mQ7Za', 'c': 'X2pNc', 'd': 'vR5yT', 'e': 'wF8oJ',
@@ -22,7 +28,7 @@ def decode(encoded_string):
     decoded_string = ""
     key_reversed = {v: k for k, v in key.items()}  # Reverse the key dictionary
 
-    for i in range(0, len(encoded_string), 5):
+    for i in range(0, len(encoded_string), ):
         chunk = encoded_string[i:i+5]
         if chunk in key_reversed:
             print(f"Decoding chunk: {chunk} to {key_reversed[chunk]}")
@@ -30,17 +36,32 @@ def decode(encoded_string):
 
     return decoded_string
 
-input_string = st.text_input("Enter text to encode:")
-encode_button = st.button("Encode")
-decode_button = st.button("Decode")
+# Streamlit App
+st.title("Text Encoder/Decoder")
 
+# Encoding
+select_box = st.selectbox("Select an encoding variant", ["Substitution", "Key-Based"])
 
-if encode_button:
-    st.write("Encoding...")
-    st.text_input("Encoded text:", value=encode(input_string), disabled=True)
-if decode_button:
-    st.write("Decoding...")
-    st.text_input("Decoded text:", value=decode(input_string), disabled=True)
+if select_box == "Substitution":
+    n = st.number_input("Enter a number for substitution encoding", min_value=1, max_value=100, value=3)
+    input_string = st.text_input("Enter the string to encode")
+    st.write(substitution_encoding(n, input_string))
+
+if select_box == "Key-Based":
+    input_string = st.text_input("Enter the string to encode")
+    st.write(encode(input_string))
+
+select_box2 = st.selectbox("Select an decoding variant", ["Substitution", "Key-Based"])
+
+if select_box2 == "Substitution":
+    n = st.number_input("Enter a number for substitution decoding", min_value=1, max_value=100, value=3)
+    input_string = st.text_input("Enter the string to decode")
+    st.write(substitution_decoding(n, input_string))
+
+elif select_box2 == "Key-Based":
+    input_string = st.text_input("Enter the string to decode")
+    st.write(decode(input_string))
+
     
 
 
